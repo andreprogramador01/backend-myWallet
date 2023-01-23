@@ -21,7 +21,7 @@ export async function pegarTodasTransacoesPorUsuario(req,res){
     const session = res.locals.sessao
 
     try {
-        const transacoes = await db.collection('wallet').find({userId: session.userId}).toArray()
+        const transacoes = await db.collection('wallet').find({userId: session.userId}).sort({date: -1}).toArray()
         const user = await db.collection('users').findOne({_id: ObjectId(session.userId)})
         res.send({transacoes,user})
     } catch (error) {
